@@ -21,13 +21,7 @@ class ProductFeaturedDetailView(DetailView):
 
 
 class ProductListView(ListView):
-    # queryset = Product.objects.all()
     template_name = "products/list.html"
-
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(ProductListView, self).get_context_data(*args, **kwargs)
-    #     print(context)
-    #     return context
 
     def get_queryset(self):
         return Product.objects.all().featured()
@@ -46,9 +40,7 @@ class ProductDetailSlugView(DetailView):
     template_name = "products/detail.html"
 
     def get_object(self, *args, **kwargs):
-        request = self.request
         slug = self.kwargs.get('slug')
-        # instance = get_object_or_404(Product, slug=slug, active=True)
         try:
             instance = Product.objects.get(slug=slug, active=True)
         except Product.DoesNotExist:
@@ -62,7 +54,6 @@ class ProductDetailSlugView(DetailView):
 
 
 class ProductDetailView(DetailView):
-    # queryset = Product.objects.all()
     template_name = "products/detail.html"
 
     def get_context_data(self, *args, **kwargs):
@@ -76,33 +67,14 @@ class ProductDetailView(DetailView):
             raise Http404("Product doesn't exist")
         return instance
 
-    # def get_queryset(self):
-    #     pk = self.kwargs.get('pk')
-    #     return Product.objects.filter(pk=pk)
-
 
 def product_detail_view(request, pk=None, *args, **kwargs):
-    # instance = Product.objects.get(pk=pk) #id
-    # instance = get_object_or_404(Product, pk=pk)
-    # try:
-    #     instance = Product.objects.get(id=pk)
-    # except Product.DoesNotExist:
-    #     print("No Product here")
-    #     raise Http404("Product doesn't exist")
-    # except:
-    #     print("Error")
-
     instance = Product.objects.get_by_id(pk)
     if instance is None:
         raise Http404("Product doesn't exist")
 
-    # qs = Product.objects.filter(id=pk)
-    # if qs.exists() and qs.count() == 1:  # Do qs.count instead of len(qs) because it's more efficient.
-    #     instance = qs.first()
-    # else:
-    #     raise Http404("Product does not exist.")
-
     context = {
         'object': instance
     }
+
     return render(request, "products/detail.html", context)
