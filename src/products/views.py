@@ -7,13 +7,16 @@ from .models import Product
 
 # Create your views here.
 class ProductListView(ListView):
-    queryset = Product.objects.all()
+    # queryset = Product.objects.all()
     template_name = "products/list.html"
 
     # def get_context_data(self, *args, **kwargs):
     #     context = super(ProductListView, self).get_context_data(*args, **kwargs)
     #     print(context)
     #     return context
+
+    def get_queryset(self):
+        return Product.objects.all()
 
 
 def product_list_view(request):
@@ -25,14 +28,23 @@ def product_list_view(request):
 
 
 class ProductDetailView(DetailView):
-    queryset = Product.objects.all()
+    # queryset = Product.objects.all()
     template_name = "products/detail.html"
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
-        print(context)
-        # context['abc'] = 123
         return context
+
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get('pk')
+        instance = Product.objects.get_by_id(pk)
+        if instance is None:
+            raise Http404("Product doesn't exist")
+        return instance
+
+    # def get_queryset(self):
+    #     pk = self.kwargs.get('pk')
+    #     return Product.objects.filter(pk=pk)
 
 
 def product_detail_view(request, pk=None, *args, **kwargs):
@@ -46,11 +58,15 @@ def product_detail_view(request, pk=None, *args, **kwargs):
     # except:
     #     print("Error")
 
-    qs = Product.objects.filter(id=pk)
-    if qs.exists() and qs.count() == 1:  # Do qs.count instead of len(qs) because it's more efficient.
-        instance = qs.first()
-    else:
-        raise Http404("Product does not exist.")
+    instance = Product.objects.get_by_id(pk)
+    if instance is None:
+        raise Http404("Product doesn't exist")
+
+    # qs = Product.objects.filter(id=pk)
+    # if qs.exists() and qs.count() == 1:  # Do qs.count instead of len(qs) because it's more efficient.
+    #     instance = qs.first()
+    # else:
+    #     raise Http404("Product does not exist.")
 
     context = {
         'object': instance
