@@ -2,9 +2,9 @@ import math
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 
+from billing.models import BillingProfile
 from carts.models import Cart
 from ecommerce.utils import unique_order_id_generator
-
 
 
 ORDER_STATUS_CHOICES = (
@@ -18,11 +18,13 @@ ORDER_STATUS_CHOICES = (
 # Create your models here.
 # Random, Unique
 class Order(models.Model):
+    billing_profile = models.ForeignKey(BillingProfile, null=True, blank=True, on_delete=models.CASCADE)
     order_id = models.CharField(max_length=120, blank=True)  # AB31DE3
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     status = models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
     shipping_total = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+    active = models.BooleanField(default=True)
 
     def update_total(self):
         cart_total = self.cart.total
