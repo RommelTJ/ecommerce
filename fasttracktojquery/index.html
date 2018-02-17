@@ -20,6 +20,25 @@
     </style>
 </head>
 <body>
+<div class='container'>
+    <div class='row'>
+        <div class='col mx-auto'>
+            <h3>Form</h3>
+            <form class='new-content-form' method="POST" action='/some/url/link'>
+                <textarea name='content' class='form-control'></textarea>
+                <input type='submit' value='Save' />
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class='formDataSubmitted'></div>
+
+<br/>
+<br/>
+<br/>
+
+
 <h1 class='header'>Hello, world!</h1>
 <h1 class='header'>Hello, world!</h1>
 <h1 class='header' id='header-3'>Header 3</h1>
@@ -51,32 +70,21 @@
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        var descriptionItems = $(".description");
-
-        $.each(descriptionItems, function(index, obj){
-            var item = $(this);
-            var actualHeight = item[0].scrollHeight;
-            var shouldBeHeight = item.height();
-
-            if (actualHeight > shouldBeHeight + 50) {
-                item.css("overflow-y", "scroll");
-            }
-        });
-
-        var header3 = $("#header-3");
-        header3.click(function(event) {
-            var $this = $(this);
-            window.location.href = 'http://www.google.com/';
-        });
-
-        var descriptionLinks = $(".description a");
-        descriptionLinks.click(function(event) {
+    $(document).ready(function() {
+        var contentForm = $(".new-content-form");
+        contentForm.submit(function(event) {
             event.preventDefault();
             var $this = $(this);
-            var href = $this.attr("href");
-            alert(href);
-            window.location.href = href;
+            var textAreaContent = $this.find('textarea');
+            var formMethod = $this.attr("method");
+            var formAction = $this.attr("action");
+            var data = {
+                "content": textAreaContent.val(),
+                "method": formMethod,
+                "action": formAction
+            };
+            $('.formDataSubmitted').text(textAreaContent.val() + " method is " + formMethod);
+            textAreaContent.val("");
         });
     });
 </script>
