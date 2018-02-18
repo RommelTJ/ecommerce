@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from accounts.forms import LoginForm, GuestForm
@@ -18,8 +19,6 @@ def cart_home(request):
 
 def cart_update(request):
     product_id = request.POST.get('product_id')
-    if request.is_ajax():
-        print("Ajax request")
     if product_id is not None:
         try:
             product_obj = Product.objects.get(id=product_id)
@@ -29,9 +28,18 @@ def cart_update(request):
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         if product_obj in cart_obj.products.all():
             cart_obj.products.remove(product_obj)
+            added = False
         else:
             cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)
+            added = True
         request.session['cart_items'] = cart_obj.products.count()
+
+        if request.is_ajax():
+            json_data = {
+                "added": added,
+                "removed": not added,
+            }
+            return JsonResponse(json_data)
 
     return redirect("cart:home")
 
