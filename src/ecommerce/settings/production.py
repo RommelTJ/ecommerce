@@ -25,6 +25,9 @@ config.read(os.path.join(BASE_DIR, 'config', 'settings.ini'))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config.get('key', 'SECRET_KEY')
 
+# SECURITY WARNING: keep the secret key used in production secret!
+STRIPE_API_KEY = config.get('stripe', 'SECRET_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
