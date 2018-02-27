@@ -4,10 +4,11 @@ from django.db.models.signals import post_save, pre_save
 
 from accounts.models import GuestEmail
 
-User = settings.AUTH_USER_MODEL
-
 import stripe
 stripe.api_key = settings.STRIPE_API_KEY
+
+User = settings.AUTH_USER_MODEL
+
 
 # Create your models here.
 class BillingProfileManager(models.Manager):

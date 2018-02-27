@@ -27,6 +27,7 @@ SECRET_KEY = config.get('key', 'SECRET_KEY')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 STRIPE_API_KEY = config.get('stripe', 'SECRET_KEY')
+STRIPE_PUB_KEY = config.get('stripe', 'PUBLIC_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
