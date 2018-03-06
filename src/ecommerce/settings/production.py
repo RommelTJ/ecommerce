@@ -35,9 +35,9 @@ MAILCHIMP_DATA_CENTER = config.get('mailchimp', 'DATA_CENTER')
 MAILCHIMP_EMAIL_LIST_ID = config.get('mailchimp', 'EMAIL_LIST_ID')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.rommelrico.com']
 
 
 # Application definition
