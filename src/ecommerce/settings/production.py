@@ -35,10 +35,19 @@ MAILCHIMP_DATA_CENTER = config.get('mailchimp', 'DATA_CENTER')
 MAILCHIMP_EMAIL_LIST_ID = config.get('mailchimp', 'EMAIL_LIST_ID')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.rommelrico.com']
 
+# Email Settings.
+EMAIL_HOST = config.get('email', 'EMAIL_HOST')
+EMAIL_HOST_USER = config.get('email', 'EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config.get('email', 'EMAIL_HOST_PASSWORD')
+EMAIL_PORT = config.get('email', 'EMAIL_PORT')
+EMAIL_USE_TLS = config.get('email', 'EMAIL_USE_TLS')
+DEFAULT_FROM_EMAIL = config.get('email', 'DEFAULT_FROM_EMAIL')
+MANAGERS = (('Rommel Rico', "me@rommelrico.com"),)
+ADMINS = MANAGERS
 
 # Application definition
 
@@ -153,8 +162,20 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static_my_proj"),
 ]
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
+STATIC_ROOT = '/home/<account>/webapps/ecommerce_static_root/'
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
+MEDIA_ROOT = '/home/<account>/webapps/ecommerce_media_root/'
+
+# Let's Encrypt ssl/tls https
+# Insecure settings
+CORS_REPLACE_HTTPS_REFERER = True
+HOST_SCHEME = "https://"
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 1000000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_FRAME_DENY = True
