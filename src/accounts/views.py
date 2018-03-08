@@ -1,5 +1,6 @@
-from django.contrib.auth import authenticate, login, get_user_model
-from django.views.generic import CreateView, FormView
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView, FormView, DetailView
 from django.shortcuts import render,redirect
 from django.utils.http import is_safe_url
 
@@ -9,6 +10,13 @@ from .signals import user_logged_in
 
 
 # Create your views here.
+
+class AccountHomeView(LoginRequiredMixin, DetailView):
+    template_name = "accounts/home.html"
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
 def guest_register_view(request):
     form = GuestForm(request.POST or None)
     context = {
