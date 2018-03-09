@@ -49,6 +49,8 @@ DEFAULT_FROM_EMAIL = config.get('email', 'DEFAULT_FROM_EMAIL')
 MANAGERS = (('Rommel Rico', "me@rommelrico.com"),)
 ADMINS = MANAGERS
 
+BASE_URL = '127.0.0.1:8000/'
+
 # Application definition
 
 INSTALLED_APPS = [

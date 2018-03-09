@@ -49,6 +49,8 @@ DEFAULT_FROM_EMAIL = config.get('email', 'DEFAULT_FROM_EMAIL')
 MANAGERS = (('Rommel Rico', "me@rommelrico.com"),)
 ADMINS = MANAGERS
 
+BASE_URL = 'https://pythonecommerce.rommelrico.com/'
+
 # Application definition
 
 INSTALLED_APPS = [
