@@ -46,6 +46,7 @@ EMAIL_HOST_PASSWORD = config.get('email', 'EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config.get('email', 'EMAIL_PORT')
 EMAIL_USE_TLS = config.get('email', 'EMAIL_USE_TLS')
 DEFAULT_FROM_EMAIL = config.get('email', 'DEFAULT_FROM_EMAIL')
+DEFAULT_ACTIVATION_DAYS = 7
 MANAGERS = (('Rommel Rico', "me@rommelrico.com"),)
 ADMINS = MANAGERS
 
