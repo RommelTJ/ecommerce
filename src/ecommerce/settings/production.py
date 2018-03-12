@@ -46,8 +46,11 @@ EMAIL_HOST_PASSWORD = config.get('email', 'EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config.get('email', 'EMAIL_PORT')
 EMAIL_USE_TLS = config.get('email', 'EMAIL_USE_TLS')
 DEFAULT_FROM_EMAIL = config.get('email', 'DEFAULT_FROM_EMAIL')
+DEFAULT_ACTIVATION_DAYS = 7
 MANAGERS = (('Rommel Rico', "me@rommelrico.com"),)
 ADMINS = MANAGERS
+
+BASE_URL = 'https://pythonecommerce.rommelrico.com/'
 
 # Application definition
 
@@ -73,6 +76,9 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = '/login/'
+LOGIN_URL_REDIRECT = '/'
+LOGOUT_URL = '/logout/'
 
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
