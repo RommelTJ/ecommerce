@@ -1,3 +1,4 @@
+from django.views.generic import ListView
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 
@@ -7,6 +8,28 @@ from .models import Address
 
 
 # Create your views here.
+class AddressListView(ListView):
+    template_name = 'addresses/list.html'
+
+    def get_queryset(self):
+        request = self.request
+        billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
+        return Address.objects.filter(billing_profile=billing_profile)
+
+
+class AddressUpdateView(object):
+    template_name = 'addresses/update.html'
+
+    def get_queryset(self):
+        request = self.request
+        billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
+        return Address.objects.filter(billing_profile=billing_profile)
+
+
+class AddressCreateView(object):
+    template_name = 'addresses/create.html'
+
+
 def checkout_address_create_view(request):
     form = AddressForm(request.POST or None)
     context = {
