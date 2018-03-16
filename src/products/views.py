@@ -1,5 +1,9 @@
+import os
+from wsgiref.util import FileWrapper
+from mimetypes import guess_type
+from django.conf import settings
 from django.http import Http404, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -93,10 +97,20 @@ class ProductDownloadView(View):
             raise Http404("Download not found!")
         download_obj = download_qs.first()
         # TODO: Permission checks.
-        # TODO: Form the download.
 
-        response = HttpResponse(download_obj.get_download_url())
-        return response
+        file_root = settings.PROTECTED_ROOT
+        filepath = download_obj.file.path
+        final_filepath = os.path.join(file_root, filepath)
+        with open(final_filepath, 'rb') as f:
+            wrapper = FileWrapper(f)
+            mimetype = 'application/force-download'
+            guessed_mimetype = guess_type(filepath)[0]  # filename.mp4
+            if guessed_mimetype:
+                mimetype = guessed_mimetype
+            response = HttpResponse(wrapper, content_type=mimetype)
+            response['Content-Disposition'] = "attachment;filename=%s" % download_obj.name
+            response["X-SendFile"] = str(download_obj.name)
+            return response
 
 
 class ProductDetailView(ObjectViewedMixin, DetailView):
