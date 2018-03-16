@@ -174,6 +174,8 @@ STATIC_ROOT = '/home/<account>/webapps/ecommerce_static_root/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/home/<account>/webapps/ecommerce_media_root/'
 
+PROTECTED_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "protected_media")
+
 # Let's Encrypt ssl/tls https
 # Insecure settings
 CORS_REPLACE_HTTPS_REFERER = True
