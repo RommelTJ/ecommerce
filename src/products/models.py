@@ -101,10 +101,15 @@ pre_save.connect(product_pre_save_receiver, sender=Product)
 
 def upload_product_file_loc(instance, filename):
     slug = instance.product.slug
+    id_ = instance.id
+    if id_ is None:
+        klass = instance.__class__
+        qs = klass.objects.all().order_by('-pk')
+        id_ = qs.first().id + 1
     if not slug:
         slug = unique_slug_generator(instance.product)
-    location = "product/{}/".format(slug)
-    return location + filename  # path/to/filename.mp4
+    location = "product/{slug}/{id}/".format(slug=slug, id=id_)
+    return location + filename  # "path/to/filename.mp4"
 
 
 class ProductFile(models.Model):
