@@ -2,7 +2,6 @@ import math
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
-from django.conf import settings
 
 from addresses.models import Address
 from billing.models import BillingProfile
@@ -21,6 +20,14 @@ ORDER_STATUS_CHOICES = (
 
 # Create your models here.
 class OrderManagerQuerySet(models.query.QuerySet):
+    def recent(self):
+        return self.order_by("-updated", "-timestamp")
+
+    def by_status(self, status="shipped"):
+        return self.filter(status=status)
+
+    def not_refunded(self):
+        return self.exclude(status="refunded")
 
     def by_request(self, request):
         billing_profile, created = BillingProfile.objects.new_or_get(request)
