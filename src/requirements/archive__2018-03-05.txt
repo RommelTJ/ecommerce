@@ -11,4 +11,4 @@ setuptools==38.4.0
 simplejson==3.13.2
 stripe==1.79.0
 urllib3==1.26.5
-wheel==0.30.0
+wheel==0.38.1
