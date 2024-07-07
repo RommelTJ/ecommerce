@@ -6,7 +6,7 @@ idna==2.6
 pillow==10.3.0
 pip==23.3
 pytz==2018.3
-requests==2.31.0
+requests==2.32.2
 setuptools==65.5.1
 simplejson==3.13.2
 stripe==1.79.1
