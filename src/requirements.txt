@@ -10,5 +10,5 @@ requests==2.32.2
 setuptools==70.0.0
 simplejson==3.13.2
 stripe==1.79.1
-urllib3==1.26.18
+urllib3==1.26.19
 wheel==0.38.1
