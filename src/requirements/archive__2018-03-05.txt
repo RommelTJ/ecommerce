@@ -3,7 +3,7 @@ cfe==0.0.15
 chardet==3.0.4
 Django==4.2.27
 idna==2.6
-Pillow==12.1.1
+Pillow==12.2.0
 pip==26.0
 pytz==2017.3
 requests==2.32.4
